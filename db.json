@@ -1,0 +1,52 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin User",
+      "email": "admin@test.com",
+      "password": "123",
+      "role": "ADMIN"
+    },
+    {
+      "id": "2",
+      "name": "Manager Sarah",
+      "email": "man@gmail.com",
+      "password": "man",
+      "role": "MANAGER"
+    },
+    {
+      "id": "3",
+      "name": "GAUTHAM",
+      "email": "ab@gmail.com",
+      "password": "1234",
+      "role": "EMPLOYEE"
+    },
+    {
+      "id": "1776528296678",
+      "name": "Sam",
+      "email": "bsam@gmail.com",
+      "password": "123",
+      "role": "EMPLOYEE"
+    }
+  ],
+  "leaves": [
+    {
+      "id": 1776528610112,
+      "type": "Vacation",
+      "startDate": "2026-04-20",
+      "endDate": "2026-04-25",
+      "reason": "a trip to America",
+      "employee": "Sam",
+      "status": "Approved"
+    },
+    {
+      "id": 1776529824616,
+      "type": "Vacation",
+      "startDate": "2026-05-05",
+      "endDate": "2026-05-12",
+      "reason": "A trip to Canada",
+      "employee": "Sam",
+      "status": "Approved"
+    }
+  ]
+}
