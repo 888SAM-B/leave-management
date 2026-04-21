@@ -20,27 +20,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 
   // ---------- SIGNUP ----------
-  const signup = async (userData: User) => {
-    try {
-      const response = await fetch("/api/signup", {
+ const signup = async (userData: User) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users`,
+      {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || "Signup failed");
       }
+    );
 
-      // After signup, redirect to login so user can sign in
-      router.push("/login");
-    } catch (error: any) {
-      console.error("Signup Error:", error);
-      throw new Error(error.message || "Signup failed. Please try again.");
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || "Signup failed");
     }
-  };
+
+    // Redirect after success
+    router.push("/login");
+  } catch (error: any) {
+    console.error("Signup Error:", error);
+    throw new Error(error.message || "Signup failed. Please try again.");
+  }
+};
 
   // ---------- LOGIN ----------
   const login = async (email: string, password: string, role: Role) => {
