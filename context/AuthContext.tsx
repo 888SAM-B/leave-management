@@ -46,35 +46,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 };
 
   // ---------- LOGIN ----------
-  const login = async (email: string, password: string, role: Role) => {
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, role }),
-      });
+const login = async (email: string, password: string, role: Role) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users?email=${email}&password=${password}`
+    );
 
-      const result = await response.json();
+    const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.message || "Invalid credentials");
-      }
-
-      const foundUser = result.user;
-
-      setUser({
-        name: foundUser.name,
-        email: foundUser.email,
-        role: foundUser.role,
-      });
-
-      handleRedirect(foundUser.role);
-    } catch (error: any) {
-      console.error("Login Error:", error);
-      throw new Error(error.message || "Failed to login. Please try again.");
+    if (!response.ok || result.length === 0) {
+      throw new Error("Invalid credentials");
     }
-  };
 
+    const foundUser = result[0];
+
+    // Optional: role check
+    if (foundUser.role !== role) {
+      throw new Error("Role mismatch");
+    }
+
+    setUser({
+      name: foundUser.name,
+      email: foundUser.email,
+      role: foundUser.role,
+    });
+
+    handleRedirect(foundUser.role);
+  } catch (error: any) {
+    console.error("Login Error:", error);
+    throw new Error(error.message || "Failed to login. Please try again.");
+  }
+};
   // ---------- REDIRECT ----------
   const handleRedirect = (role: Role) => {
     if (role === "EMPLOYEE") router.push("/employee");
